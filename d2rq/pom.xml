@@ -8,12 +8,17 @@
   <packaging>jar</packaging>
 
   <name>d2rq</name>
-  <url>http://maven.apache.org</url>
+  <description>The D2R engine incl. some edits as maven project. See also http://github.com/cygri/d2rq</description>
+  <url>http://d2rq.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <organization>
+  	<name>C4DM</name>
+  	<url>http://www.elec.qmul.ac.uk/digitalmusic/</url>
+  </organization>
   <repositories>
   	<repository>
   		<releases>
