@@ -1,0 +1,10 @@
+This is a maven project [1] of D2RQ [2] that is based on sources from [3] (and some additional patches that are currently submitted as pull request, see [6]). It hopefully includes (more or less ;) ) D2RQ sources only, i.e. no D2RS sources. These are separately available as a maven project which can be found at [4]. A generated jar file of these sources can be found at [5].
+
+
+[1] http://maven.apache.org/
+[2] http://d2rq.org/
+[3] https://github.com/cygri/d2rq/
+[4] https://github.com/zazi/D2RS-LinkedBrainz
+[5] https://github.com/zazi/D2RQ-maven/blob/master/d2rq/target/d2rq-0.7-maven.jar
+[6] https://github.com/cygri/d2rq/pull/1
+
