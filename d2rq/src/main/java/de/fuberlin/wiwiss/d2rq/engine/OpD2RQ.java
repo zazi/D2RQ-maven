@@ -2,6 +2,8 @@ package de.fuberlin.wiwiss.d2rq.engine;
 
 import java.util.Collection;
 
+import org.openjena.atlas.io.IndentedWriter;
+
 import com.hp.hpl.jena.sparql.algebra.Op;
 import com.hp.hpl.jena.sparql.algebra.op.OpBGP;
 import com.hp.hpl.jena.sparql.algebra.op.OpExt;
@@ -9,12 +11,20 @@ import com.hp.hpl.jena.sparql.engine.ExecutionContext;
 import com.hp.hpl.jena.sparql.engine.QueryIterator;
 import com.hp.hpl.jena.sparql.serializer.SerializationContext;
 import com.hp.hpl.jena.sparql.sse.writers.WriterOp;
-import com.hp.hpl.jena.sparql.util.IndentedWriter;
 import com.hp.hpl.jena.sparql.util.NodeIsomorphismMap;
 
 import de.fuberlin.wiwiss.d2rq.algebra.Relation;
 import de.fuberlin.wiwiss.d2rq.optimizer.iterators.RelationToBindingsD2RQIterator;
 
+/**
+ * 
+ * CHANGED: 
+ * 		com.hp.hpl.jena.sparql.util.IndentedWriter (available till ARQ 2.8.4) -> org.openjena.atlas.io.IndentedWriter
+ * 
+ * @author unknown
+ * @author zazi (http://github.com/zazi)
+ *
+ */
 public class OpD2RQ extends OpExt
 {
 	private static final String tagD2RQ = "d2rq"; 	
@@ -72,11 +82,14 @@ public class OpD2RQ extends OpExt
 		return "d2rq";
 	}
 
-	public void outputArgs(IndentedWriter out, SerializationContext sCxt) {
-		int line = out.getRow() ;
-		WriterOp.output(out, this, sCxt) ;
-		if ( line != out.getRow() )
-			out.ensureStartOfLine() ;
+	@Override
+	public void outputArgs(IndentedWriter arg0,
+			SerializationContext arg1)
+	{
+		int line = arg0.getRow() ;
+		WriterOp.output(arg0, this, arg1) ;
+		if ( line != arg0.getRow() )
+			arg0.ensureStartOfLine() ;
 	}
 	
 }

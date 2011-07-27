@@ -11,7 +11,7 @@ import com.hp.hpl.jena.sparql.algebra.op.OpDistinct;
 import com.hp.hpl.jena.sparql.algebra.op.OpExt;
 import com.hp.hpl.jena.sparql.algebra.op.OpFilter;
 import com.hp.hpl.jena.sparql.algebra.op.OpGraph;
-import com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg;
+import com.hp.hpl.jena.sparql.algebra.op.OpGroup;
 import com.hp.hpl.jena.sparql.algebra.op.OpJoin;
 import com.hp.hpl.jena.sparql.algebra.op.OpLabel;
 import com.hp.hpl.jena.sparql.algebra.op.OpLeftJoin;
@@ -35,7 +35,13 @@ import com.hp.hpl.jena.sparql.core.VarExprList;
 /**
  * Adds needed filters.
  * 
+ * TODO: check constructor call from com.hp.hpl.jena.sparql.algebra.op.OpService on line 124
+ * 
+ * CHANGED:
+ * 		com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg (available till ARQ 2.8.4) -> com.hp.hpl.jena.sparql.algebra.op.OpGroup
+ * 
  * @author Herwig Leimer
+ * @author zazi (http://github.com/zazi)
  * 
  */
 public class TransformAddFilters extends TransformCopy
@@ -109,7 +115,13 @@ public class TransformAddFilters extends TransformCopy
     {
     	OpService newOpService;
     	
-    	newOpService = new OpService(opService.getService(), subOp);
+    	// constructor of this class changed between ARQ 2.8.7 and ARQ 2.8.8
+    	// it has now an additional boolean parameter called 'silent'
+    	// I don't know the functionality of this parameter (there is no documentation about it available)
+    	//
+    	// zazi (http://github.com/zazi)
+    	//
+    	newOpService = new OpService(opService.getService(), subOp, true);
         return OpFilter.filter(newOpService);
     }
 
@@ -184,7 +196,12 @@ public class TransformAddFilters extends TransformCopy
     {
     	OpReduced newOpReduced;
     	
-    	newOpReduced = new OpReduced(subOp);
+    	// com.hp.hpl.jena.sparql.algebra.op.OpReduced changed to Singleton class changed between ARQ 2.8.3 and ARQ 2.8.4 
+    	// that's why, the different initialisation call
+    	//
+    	// zazi (http://github.com/zazi)
+    	//
+    	newOpReduced = (OpReduced) OpReduced.create(subOp);
         return OpFilter.filter(newOpReduced);
     }
 
@@ -196,12 +213,12 @@ public class TransformAddFilters extends TransformCopy
         return OpFilter.filter(newOpSlice);
     }
 
-    public Op transform(OpGroupAgg opGroupAgg, Op subOp)
+    public Op transform(OpGroup opGroup, Op subOp)
     {
-    	OpGroupAgg newOpGroupAgg;
+    	OpGroup newOpGroup;
     	
-    	newOpGroupAgg = new OpGroupAgg(subOp, opGroupAgg.getGroupVars(), opGroupAgg.getAggregators());
-        return OpFilter.filter(newOpGroupAgg);
+    	newOpGroup = new OpGroup(subOp, opGroup.getGroupVars(), opGroup.getAggregators());
+        return OpFilter.filter(newOpGroup);
     }
 
     public Op transform(OpLeftJoin opLeftJoin, Op left, Op right)

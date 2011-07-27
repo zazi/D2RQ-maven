@@ -7,6 +7,8 @@ import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.shared.LockNone;
 import com.hp.hpl.jena.sparql.core.DatasetGraph;
+import com.hp.hpl.jena.sparql.core.Quad;
+import com.hp.hpl.jena.sparql.util.Context;
 import com.hp.hpl.jena.util.iterator.NullIterator;
 
 import de.fuberlin.wiwiss.d2rq.GraphD2RQ;
@@ -15,8 +17,10 @@ import de.fuberlin.wiwiss.d2rq.GraphD2RQ;
  * A DatasetGraph that has a single GraphD2RQ as its default
  * graph and no named graphs.
  * 
+ * TODO: implement method stubs at the bottom of the class
+ * 
  * @author Richard Cyganiak (richard@cyganiak.de)
- * @version $Id: D2RQDatasetGraph.java,v 1.2 2009/02/09 12:21:30 fatorange Exp $
+ * @author zazi (http://github.com/zazi)
  */
 public class D2RQDatasetGraph implements DatasetGraph {
 	private final static Lock LOCK_INSTANCE = new LockNone();
@@ -47,11 +51,111 @@ public class D2RQDatasetGraph implements DatasetGraph {
 		return NullIterator.instance();
 	}
 
-	public int size() {
+	@Override
+	public long size()
+	{
 		return 0;	// Just default graph
 	}
 
 	public void close() {
 		graph.close();
+	}
+
+	@Override
+	public void add(Quad arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addGraph(Node arg0, Graph arg1)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean contains(Quad arg0)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean contains(Node arg0, Node arg1, Node arg2, Node arg3)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void delete(Quad arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAny(Node arg0, Node arg1, Node arg2, Node arg3)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Iterator<Quad> find()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<Quad> find(Quad arg0)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<Quad> find(Node arg0, Node arg1, Node arg2, Node arg3)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<Quad> findNG(Node arg0, Node arg1, Node arg2, Node arg3)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Context getContext()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void removeGraph(Node arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDefaultGraph(Graph arg0)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

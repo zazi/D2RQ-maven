@@ -18,15 +18,18 @@ import com.hp.hpl.jena.sparql.algebra.op.OpBGP;
 import com.hp.hpl.jena.sparql.algebra.op.OpConditional;
 import com.hp.hpl.jena.sparql.algebra.op.OpDatasetNames;
 import com.hp.hpl.jena.sparql.algebra.op.OpDiff;
+import com.hp.hpl.jena.sparql.algebra.op.OpDisjunction;
 import com.hp.hpl.jena.sparql.algebra.op.OpDistinct;
 import com.hp.hpl.jena.sparql.algebra.op.OpExt;
+import com.hp.hpl.jena.sparql.algebra.op.OpExtend;
 import com.hp.hpl.jena.sparql.algebra.op.OpFilter;
 import com.hp.hpl.jena.sparql.algebra.op.OpGraph;
-import com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg;
+import com.hp.hpl.jena.sparql.algebra.op.OpGroup;
 import com.hp.hpl.jena.sparql.algebra.op.OpJoin;
 import com.hp.hpl.jena.sparql.algebra.op.OpLabel;
 import com.hp.hpl.jena.sparql.algebra.op.OpLeftJoin;
 import com.hp.hpl.jena.sparql.algebra.op.OpList;
+import com.hp.hpl.jena.sparql.algebra.op.OpMinus;
 import com.hp.hpl.jena.sparql.algebra.op.OpN;
 import com.hp.hpl.jena.sparql.algebra.op.OpNull;
 import com.hp.hpl.jena.sparql.algebra.op.OpOrder;
@@ -40,6 +43,7 @@ import com.hp.hpl.jena.sparql.algebra.op.OpSequence;
 import com.hp.hpl.jena.sparql.algebra.op.OpService;
 import com.hp.hpl.jena.sparql.algebra.op.OpSlice;
 import com.hp.hpl.jena.sparql.algebra.op.OpTable;
+import com.hp.hpl.jena.sparql.algebra.op.OpTopN;
 import com.hp.hpl.jena.sparql.algebra.op.OpTriple;
 import com.hp.hpl.jena.sparql.algebra.op.OpUnion;
 import com.hp.hpl.jena.sparql.core.BasicPattern;
@@ -54,7 +58,13 @@ import de.fuberlin.wiwiss.d2rq.optimizer.utility.OpFilterUtility;
  * object-vars of sub-operators)
  * Additionaly it performs optimizing for filters - checks if tranformation to cnf is better
  * 
+ * TODO: implement method stubs at the bottom of this class
+ * 
+ * CHANGED:
+ * 		com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg (available till ARQ 2.8.4) -> com.hp.hpl.jena.sparql.algebra.op.OpGroup
+ * 
  * @author Herwig Leimer
+ * @author zazi (http://gibhub.com/zazi)
  *
  */
 public class TransformPrepareOpTreeForOptimizing implements Transform 
@@ -371,13 +381,14 @@ public class TransformPrepareOpTreeForOptimizing implements Transform
 		// add label
 		return addLabelToOp1((Op1)newOpLabel);
 	}
-
-	public Op transform(OpSequence opSequence, List elts) 
+	
+	@Override
+	public Op transform(OpSequence arg0, List<Op> arg1)
 	{
 		Op newOpSequence;
 		
 		// copy opsequence
-		newOpSequence = opSequence.copy(elts);
+		newOpSequence = arg0.copy(arg1);
 		
 		// add label
 		return addLabelToOpN((OpN)newOpSequence);
@@ -449,15 +460,15 @@ public class TransformPrepareOpTreeForOptimizing implements Transform
 		return addLabelToOp1((Op1)newOpSlice);
 	}
 
-	public Op transform(OpGroupAgg opGroupAgg, Op subOp) 
+	public Op transform(OpGroup opGroup, Op subOp) 
 	{
-		Op newOpGroupAgg;
+		Op newOpGroup;
 		
 		// copy opgroupagg
-		newOpGroupAgg = opGroupAgg.copy(subOp);
+		newOpGroup = opGroup.copy(subOp);
 		
 		// add label
-		return addLabelToOp1((Op1)newOpGroupAgg);
+		return addLabelToOp1((Op1)newOpGroup);
 	}
 
 	public Op transform(OpDiff opDiff, Op left, Op right) 
@@ -606,6 +617,34 @@ public class TransformPrepareOpTreeForOptimizing implements Transform
 		
 		// add the label
 		return OpLabel.create(threatedVars, opExt);
+	}
+
+	@Override
+	public Op transform(OpExtend arg0, Op arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpDisjunction arg0, List<Op> arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpTopN arg0, Op arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpMinus arg0, Op arg1, Op arg2)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

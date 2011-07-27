@@ -15,7 +15,7 @@ import com.hp.hpl.jena.sparql.engine.iterator.QueryIter;
 import com.hp.hpl.jena.sparql.engine.iterator.QueryIterNullIterator;
 import com.hp.hpl.jena.sparql.engine.iterator.QueryIterRepeatApply;
 import com.hp.hpl.jena.sparql.serializer.SerializationContext;
-import com.hp.hpl.jena.sparql.util.IndentedWriter;
+import org.openjena.atlas.io.IndentedWriter;
 import com.hp.hpl.jena.sparql.util.Utils;
 import de.fuberlin.wiwiss.d2rq.algebra.MutableRelation;
 import de.fuberlin.wiwiss.d2rq.algebra.Relation;
@@ -31,7 +31,11 @@ import de.fuberlin.wiwiss.d2rq.values.ValueMaker;
 /**
  * Iterator that calcualtes the result-bindings of an OpD2RQ.
  *
+ * CHANGED:
+ * 		com.hp.hpl.jena.sparql.util.IndentedWriter (available till ARQ 2.8.4) -> org.openjena.atlas.io.IndentedWriter
+ *
  * @author Herwig Leimer
+ * @author zazi (http://github.com/zazi)
  *
  */
 public class RelationToBindingsD2RQIterator extends QueryIterRepeatApply
@@ -89,7 +93,10 @@ public class RelationToBindingsD2RQIterator extends QueryIterRepeatApply
 	 * Class that fetches additional values for every parent-binding.
 	 * Especially necessary for Joins and LeftJoins.
 	 * 
+	 * TODO: implement method stub at the bottom of this class
+	 * 
 	 * @author Herwig Leimer
+	 * @author zazi (http://github.com/zazi)
 	 *
 	 */
 	static class StagePattern extends QueryIter
@@ -244,6 +251,13 @@ public class RelationToBindingsD2RQIterator extends QueryIterRepeatApply
     			}
     		}
     	}
+
+		@Override
+		protected void requestCancel()
+		{
+			// TODO Auto-generated method stub
+			
+		}
     }
 	
 	

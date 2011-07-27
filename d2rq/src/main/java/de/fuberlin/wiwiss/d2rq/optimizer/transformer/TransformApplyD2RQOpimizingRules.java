@@ -8,15 +8,18 @@ import com.hp.hpl.jena.sparql.algebra.op.OpBGP;
 import com.hp.hpl.jena.sparql.algebra.op.OpConditional;
 import com.hp.hpl.jena.sparql.algebra.op.OpDatasetNames;
 import com.hp.hpl.jena.sparql.algebra.op.OpDiff;
+import com.hp.hpl.jena.sparql.algebra.op.OpDisjunction;
 import com.hp.hpl.jena.sparql.algebra.op.OpDistinct;
 import com.hp.hpl.jena.sparql.algebra.op.OpExt;
+import com.hp.hpl.jena.sparql.algebra.op.OpExtend;
 import com.hp.hpl.jena.sparql.algebra.op.OpFilter;
 import com.hp.hpl.jena.sparql.algebra.op.OpGraph;
-import com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg;
+import com.hp.hpl.jena.sparql.algebra.op.OpGroup;
 import com.hp.hpl.jena.sparql.algebra.op.OpJoin;
 import com.hp.hpl.jena.sparql.algebra.op.OpLabel;
 import com.hp.hpl.jena.sparql.algebra.op.OpLeftJoin;
 import com.hp.hpl.jena.sparql.algebra.op.OpList;
+import com.hp.hpl.jena.sparql.algebra.op.OpMinus;
 import com.hp.hpl.jena.sparql.algebra.op.OpNull;
 import com.hp.hpl.jena.sparql.algebra.op.OpOrder;
 import com.hp.hpl.jena.sparql.algebra.op.OpPath;
@@ -29,14 +32,19 @@ import com.hp.hpl.jena.sparql.algebra.op.OpSequence;
 import com.hp.hpl.jena.sparql.algebra.op.OpService;
 import com.hp.hpl.jena.sparql.algebra.op.OpSlice;
 import com.hp.hpl.jena.sparql.algebra.op.OpTable;
+import com.hp.hpl.jena.sparql.algebra.op.OpTopN;
 import com.hp.hpl.jena.sparql.algebra.op.OpTriple;
 import com.hp.hpl.jena.sparql.algebra.op.OpUnion;
 import de.fuberlin.wiwiss.d2rq.optimizer.ops.OpFilteredBGP;
 
 /**
- * TODO
+ * TODO: implement method stubs at the bottom of this class
+ * 
+ * CHANGED:
+ * 		com.hp.hpl.jena.sparql.algebra.op.OpGroupAgg (available till ARQ 2.8.4) -> com.hp.hpl.jena.sparql.algebra.op.OpGroup
  * 
  * @author Herwig Leimer
+ * @author zazi (http://github.com/zazi)
  *
  */
 public class TransformApplyD2RQOpimizingRules implements Transform 
@@ -152,10 +160,11 @@ public class TransformApplyD2RQOpimizingRules implements Transform
 	{
 		return opLabel;
 	}
-
-	public Op transform(OpSequence opSequence, List elts) 
+	
+	@Override
+	public Op transform(OpSequence arg0, List<Op> arg1)
 	{
-		return opSequence;
+		return arg0;
 	}
 
 	public Op transform(OpList opList, Op subOp) 
@@ -188,9 +197,9 @@ public class TransformApplyD2RQOpimizingRules implements Transform
 		return opSlice;
 	}
 
-	public Op transform(OpGroupAgg opGroupAgg, Op subOp) 
+	public Op transform(OpGroup opGroup, Op subOp) 
 	{
-		return opGroupAgg;
+		return opGroup;
 	}
 
 	public Op transform(OpDiff opDiff, Op left, Op right) 
@@ -201,6 +210,34 @@ public class TransformApplyD2RQOpimizingRules implements Transform
 	public Op transform(OpConditional opCondition, Op left, Op right)
 	{
 		return opCondition;
+	}
+
+	@Override
+	public Op transform(OpExtend arg0, Op arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpDisjunction arg0, List<Op> arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpTopN arg0, Op arg1)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Op transform(OpMinus arg0, Op arg1, Op arg2)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
